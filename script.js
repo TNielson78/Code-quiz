@@ -1,5 +1,6 @@
 // Need to add questions and functionality to application.
 var startButton = document.getElementById("start-btn");
+var quizEl = document.getElementById("questions")
 // timer 
 var timer = document.querySelector(".timer")
 // Line 37 on....
@@ -7,11 +8,51 @@ var answerOption = document.querySelector(".option")
 
 var question = document.querySelector(".que-text")
 var timeLeft = 90
-
-function startQuiz(){
-console.log()
+var score = 0
+var index = 0
+function startQuiz() {
+    startButton.setAttribute("class", "hide");
+    quizEl.removeAttribute("class");
+    askQuestion()
 }
-startButton.addEventListener("click",startQuiz)
+function askQuestion() {
+    var currentQuestion = questionBank[index]
+    question.textContent = currentQuestion.question
+    document.getElementById("choices").innerHTML = ""
+    currentQuestion.options.forEach(function (option) {
+
+        var button = document.createElement("button")
+        button.textContent = option
+        button.setAttribute("class", "option")
+        button.setAttribute("value", option)
+
+        button.addEventListener("click", function () {
+
+            if (this.value === currentQuestion.answer) {
+                score++
+            }
+            else {
+                timeLeft -= 10
+            }
+            index++;
+            if (index === questionBank.length) {
+                endGame()
+            }
+            else {
+                askQuestion()
+            }
+
+        })
+        document.getElementById("choices").appendChild(button)
+
+    })
+}
+function endGame(){
+    quizEl.setAttribute("class","hide")
+    document.getElementById("quiz-end").classList.remove("hide")
+
+}
+startButton.addEventListener("click", startQuiz)
 // add actual questions later
 //move to end later
 var questionBank = [
@@ -26,24 +67,24 @@ var questionBank = [
         answer: "Cascading style sheets"
     },
     {
-        question: "What does CSS stand for?",
+        question: "What does HTML stand for?",
         options: [
-            "Cascading style sheets",
-            "Custom style sheet",
-            "Cant steal snickers",
-            "Caught stealing soup"
+            "Here to mess up your life",
+            "Hyper text markup language",
+            "Hard to make look good",
+            "Hyper text mode language"
         ],
-        answer: "Cascading style sheets"
+        answer: "Hyper text markup language"
     },
     {
-        question: "What does CSS stand for?",
+        question: "How do you start a tag in HTML?",
         options: [
-            "Cascading style sheets",
-            "Custom style sheet",
-            "Cant steal snickers",
-            "Caught stealing soup"
+            "//",
+            "<!--",
+            "<p>",
+            "</p>"
         ],
-        answer: "Cascading style sheets"
+        answer: "<p>"
     },
     {
         question: "What does CSS stand for?",

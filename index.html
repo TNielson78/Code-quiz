@@ -13,21 +13,21 @@
 
 
 <main class="container position-relative">
-    <div id="start" class="hide text-center">
+    <div id="start" class="text-center">
         <h1>Javascript coding fundamentals Quiz</h1>
         <button type="button" class="button" id="start-btn">Start</button>
     </div>
     <!--do i need more than one button can this be simpler as a setup? Its a simple code quiz the questions are what matters most.-->
  
-    <div id="rules" class="info-box mt-5" style="width: auto;">
+    <div id="rules" class="button" style="width: auto;">
         <div class="info-list">
             <div class="info"> Timed quiz to test your coding knowledge.</div>
         </div>
-        <div class="buttons">
+        <!-- <div class="buttons">
             <button class="Continue">Continue</button>
-        </div>
+        </div> -->
     </div>
-    <section id="questions" class="hide'row quiz-box mt-5" style="width: auto;">
+    <section id="questions" class="hide" style="width: auto;">
         <div id="time-rem">
             Time Left:
             <span class="timer"></span>
@@ -37,20 +37,20 @@
         </h1>
 
         <div id="choices" class="flex-direction">
+            <!-- <button class="option"></button>
             <button class="option"></button>
             <button class="option"></button>
-            <button class="option"></button>
-            <button class="option"></button>
+            <button class="option"></button> -->
         </div>
         <div id="response">
         </div>
     </section>
-    <div id="quiz-end" class="hide text-center p-5">
+    <div id="quiz-end" class="hide text-center">
         <div class="flex-direction flex-direction">
             <h1>End of Quiz!</h1>
             <h3 class="score"></h3>
             <h2>Enter Initials:</h2>
-            <input type="text" id="initials" class="mt-1">
+            <input type="text" id="initials">
             <button id="save-score">Submit</button>
         </div>
     </div>
