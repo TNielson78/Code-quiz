@@ -1,20 +1,22 @@
-// Need to add questions and functionality to application.
+// Start button added
 var startButton = document.getElementById("start-btn");
 var quizEl = document.getElementById("questions")
-// timer 
 var timer = document.querySelector(".timer")
-// Line 37 on....
+var timeInterval;
+var highScores = JSON.parse(localStorage.getItem("highScores")) || []
 var answerOption = document.querySelector(".option")
-
 var question = document.querySelector(".que-text")
-var timeLeft = 90
+var timeLeft = 60
 var score = 0
 var index = 0
 function startQuiz() {
     startButton.setAttribute("class", "hide");
     quizEl.removeAttribute("class");
+    //Set interval for function
+    timeInterval = setInterval(runTimer, 1000)
     askQuestion()
 }
+//Function added to call question.
 function askQuestion() {
     var currentQuestion = questionBank[index]
     question.textContent = currentQuestion.question
@@ -25,14 +27,19 @@ function askQuestion() {
         button.textContent = option
         button.setAttribute("class", "option")
         button.setAttribute("value", option)
-
+        // Event Listener added to call Button click.
         button.addEventListener("click", function () {
-
+// If elese statement added will deduct 10 seconds for wrong answers.
             if (this.value === currentQuestion.answer) {
                 score++
             }
             else {
                 timeLeft -= 10
+                if (
+                    timeLeft <= 0
+                ) {
+                    endGame()
+                }
             }
             index++;
             if (index === questionBank.length) {
@@ -47,14 +54,48 @@ function askQuestion() {
 
     })
 }
-function endGame(){
-    quizEl.setAttribute("class","hide")
+function endGame() {
+    quizEl.setAttribute("class", "hide")
     document.getElementById("quiz-end").classList.remove("hide")
 
 }
+//Function added to zero timer without going negative in number.
+function runTimer() {
+    timeLeft--;
+    if (timeLeft < 0) {
+        timeLeft = 0
+        endGame()
+    }
+    timer.textContent = timeLeft
+}
+// Function added to save the score at the end with initials.
+function saveScore() {
+    var finalScore = score * timeLeft
+    var initials = document.getElementById("initials").value
+    var scoreObject = {
+        finalScore, initials
+    }
+    highScores.push(scoreObject)
+    localStorage.setItem("highScores", JSON.stringify(highScores))
+    displayScores()
+}
+// Function added to display scores high to low at end of quiz.
+function displayScores() {
+    highScores.sort(function (a, b) {
+        return b.finalScore - a.finalScore
+    })
+    document.getElementById("quiz-end").classList.add("hide")
+    document.getElementById("highScores").classList.remove("hide")
+    for (var i = 0; i < highScores.length; i++) {
+        var li = document.createElement("li")
+        li.textContent = highScores[i].initials + " " + highScores[i].finalScore
+        document.getElementById("scoreList").appendChild(li)
+    }
+}
+//Added event listener for button click to begin quiz.
 startButton.addEventListener("click", startQuiz)
-// add actual questions later
-//move to end later
+document.getElementById("save-score").addEventListener("click", saveScore)
+// Questions to be called by javascript during quiz.
 var questionBank = [
     {
         question: "What does CSS stand for?",
@@ -87,24 +128,26 @@ var questionBank = [
         answer: "<p>"
     },
     {
-        question: "What does CSS stand for?",
+        question: "How do you add a comment to HTML?",
         options: [
-            "Cascading style sheets",
-            "Custom style sheet",
-            "Cant steal snickers",
-            "Caught stealing soup"
+            "//",
+            "<!--",
+            "/*",
+            "</>"
         ],
-        answer: "Cascading style sheets"
+        answer: "<!-->"
     },
     {
-        question: "What does CSS stand for?",
+        question: "What language is used to add styling?",
         options: [
-            "Cascading style sheets",
-            "Custom style sheet",
-            "Cant steal snickers",
-            "Caught stealing soup"
+            "HTML",
+            "Javascript",
+            "Dayjs",
+            "CSS"
         ],
-        answer: "Cascading style sheets"
+        answer: "CSS"
     }
+    
+
 
 ]

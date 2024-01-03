@@ -5,24 +5,31 @@
     background-color: lightgreen;
 }
 
+/*Font style added to page */
+
+
 body {
     font-family: sans-serif;
-    
-    /* Need to add styling to the buttons and figure out a better color scheme.
-    Format needs to be adjusted first... */
-    
-    
+
 }
+
+/* Background color padding, margin and button radius added */
+
 button {
-    background-color:gray;
+    background-color: gray;
     margin: 2px;
     padding: 2px;
     border-radius: 5px;
 
 }
+
 .hide {
     display: none;
 }
+
+/* Border box added */
+
+
 main {
     border: 1px solid black;
     max-width: 1000px;
